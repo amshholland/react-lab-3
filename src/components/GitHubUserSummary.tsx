@@ -1,6 +1,7 @@
 import { Repos, User } from "../model/GitHubApiModel";
 import { useEffect, useState } from "react";
 
+import { Repository } from "./Repository";
 import { fetchUserProfile } from "./GitHubApiService";
 import { fetchUserRepos } from "../service/GitHubApiService";
 
@@ -10,30 +11,38 @@ interface Props {
 
 function GitHubUserSummary( { username }: Props ) {
     const [ userProfile, setUserProfile ] = useState<User | null>( null );
-    const [ repo, setRepo ] = useState<Repos[] | null>( null );
+    const [ repos, setRepos ] = useState<Repos[] | null>( null );
 
     useEffect( () => {
-        fetchUserProfile( username ).then( data => {
-            setUserProfile( data );
-        } );
+        if ( username ) {
+            fetchUserProfile( username ).then( data => {
+                setUserProfile( data );
+            } );
+        } else {
+            setUserProfile( null );
+        }
     }, [ { username } ] );
 
     useEffect( () => {
         fetchUserRepos( username ).then( data => {
-            setRepo( data );
+            setRepos( data );
         } );
     }, [ { username } ] );
 
     return (
         <div className="GitHubUserSummary">
-            {userProfile ?
-                <div className="UserSummary">
-                    <h1>{ userProfile.name }</h1>
-                    <img src="{userProfile.avatar_url}"></img>
-                    <a href="{userProfile.html_url}">View their GitHub Homepage</a>
-                </div> :
-                <p>No user with username found</p>
-            }
+            <h3>GitHubUserSummary</h3>
+            <p>Username to search: { username }</p>
+            { userProfile ? <>
+                <p>{ userProfile.name } ({ userProfile.login })</p>
+                <p><img src={ userProfile.avatar_url } alt="" /></p>
+            </> : <p>Wait for it.</p> }
+
+            <div>
+                { repos.map( repo =>
+                    <Repository key={ repo.name } repo={ repo } />
+                ) }
+            </div>
         </div>
     );
 };
