@@ -11,7 +11,7 @@ interface Props {
 
 function GitHubUserSummary( { username }: Props ) {
     const [ userProfile, setUserProfile ] = useState<User | null>( null );
-    const [ repos, setRepos ] = useState<Repos[] | null>( null );
+    const [ repos, setRepos ] = useState<Repos[]>( [] );
 
     useEffect( () => {
         if ( username ) {
