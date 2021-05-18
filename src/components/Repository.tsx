@@ -3,17 +3,7 @@ import { useEffect, useState } from 'react';
 import { Repos } from '../model/GitHubApiModel';
 import { fetchUserRepos } from './GitHubApiService';
 
-interface Props {
-    username: string;
-}
-
-export function Repository( { username }: Props ) {
-    const [ repo, setRepo ] = useState<Repos | null>( null );
-    useEffect( () => {
-        fetchUserRepos( username ).then( data => {
-            setRepo( data );
-        } );
-    }, [ repo ] );
+export function Repository() {
 
     return (
         <div className="Repository">

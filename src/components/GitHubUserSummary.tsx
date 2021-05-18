@@ -1,21 +1,28 @@
+import { Repos, User } from "../model/GitHubApiModel";
 import { useEffect, useState } from "react";
 
-import { User } from "../model/GitHubApiModel";
 import { fetchUserProfile } from "./GitHubApiService";
+import { fetchUserRepos } from "../service/GitHubApiService";
 
 interface Props {
     username: string;
 }
 
 function GitHubUserSummary( { username }: Props ) {
-    const [ selectUserName, setUserName ] = useState( { username } );
     const [ userProfile, setUserProfile ] = useState<User | null>( null );
+    const [ repo, setRepo ] = useState<Repos | null>( null );
 
     useEffect( () => {
         fetchUserProfile( username ).then( data => {
             setUserProfile( data );
         } );
-    }, [ selectUserName ] );
+    }, [ { username } ] );
+
+    useEffect( () => {
+        fetchUserRepos( username ).then( data => {
+            setRepo( data );
+        } );
+    }, [ { username } ] );
 
     return (
         <div className="GitHubUserSummary">
