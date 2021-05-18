@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
 import { Repos } from '../model/GitHubApiModel';
-import { fetchUserRepos } from './GitHubApiService';
 
 export function Repository() {
+    const [ repo, setRepo ] = useState<Repos | null>( null );
 
     return (
         <div className="Repository">

@@ -10,7 +10,7 @@ interface Props {
 
 function GitHubUserSummary( { username }: Props ) {
     const [ userProfile, setUserProfile ] = useState<User | null>( null );
-    const [ repo, setRepo ] = useState<Repos | null>( null );
+    const [ repo, setRepo ] = useState<Repos[] | null>( null );
 
     useEffect( () => {
         fetchUserProfile( username ).then( data => {

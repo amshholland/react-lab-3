@@ -8,8 +8,8 @@ export interface User {
 export interface Repos {
     name: string;
     html_url: string;
-    description?: string | null;
+    description?: string;
     language: string;
     updated_at: string;
-    has_pages?: string | null;
+    has_pages?: string;
 };
